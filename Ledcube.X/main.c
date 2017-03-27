@@ -37,7 +37,10 @@ int main(void){
 
 void setLights(int lights[4][16]){
     for(int i = 0; i < 4; i++){
-        
+        TRANS_GATE_1 = (1 == i);
+        TRANS_GATE_2 = (2 == i);
+        TRANS_GATE_3 = (3 == i);
+        TRANS_GATE_4 = (4 == i);
         SHIFT_REG_CLK = 0;
         for(int j = 0; j < 16; j++){
             SHIFT_REG_LATCH = 0;
@@ -46,4 +49,6 @@ void setLights(int lights[4][16]){
         }
         SHIFT_REG_CLK = 1;
     }
+    SHIFT_REG_LATCH = 0;
+    SHIFT_REG_CLK = 0;
 }
