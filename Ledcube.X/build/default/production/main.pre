@@ -1884,11 +1884,25 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 33 "gpio.h"
+# 42 "gpio.h"
 void gpio_init(void);
 
 # 29 "main.c"
 int main(void){
 gpio_init();
+
 }
 
+# 38
+void setLights(int lights[4][16]){
+for(int i = 0; i < 4; i++){
+
+PORTBbits.RB6 = 0;
+for(int j = 0; j < 16; j++){
+PORTCbits.RC5 = 0;
+PORTCbits.RC7 = lights[i][j];
+PORTCbits.RC5 = 1;
+}
+PORTBbits.RB6 = 1;
+}
+}

@@ -1,7 +1,24 @@
 Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
-"33 gpio.h
+"42 gpio.h
 [v _gpio_init `(v ~T0 @X0 0 ef ]
+[v F1472 `i ~T0 @X0 -> 16 `i t ]
+"213 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic16f690.h
+[s S8 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S8 . . RB4 RB5 RB6 RB7 ]
+"212
+[u S7 `S8 1 ]
+[n S7 . . ]
+"221
+[v _PORTBbits `VS7 ~T0 @X0 0 e@6 ]
+"251
+[s S10 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S10 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
+"250
+[u S9 `S10 1 ]
+[n S9 . . ]
+"262
+[v _PORTCbits `VS9 ~T0 @X0 0 e@7 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1352,7 +1369,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
-[; ;gpio.h: 33: void gpio_init(void);
+[; ;gpio.h: 42: void gpio_init(void);
 "29 main.c
 [v _main `(i ~T0 @X0 1 ef ]
 {
@@ -1362,7 +1379,69 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 30: gpio_init();
 "30
 [e ( _gpio_init ..  ]
-[; ;main.c: 31: }
-"31
+[; ;main.c: 32: }
+"32
 [e :UE 131 ]
+}
+"38
+[v _setLights `(v ~T0 @X0 1 ef1`*F1472 ]
+{
+[; ;main.c: 38: void setLights(int lights[4][16]){
+[e :U _setLights ]
+[v _lights `*F1472 ~T0 @X0 1 r1 ]
+[f ]
+[; ;main.c: 39: for(int i = 0; i < 4; i++){
+"39
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 4 `i 133  ]
+[e $U 134  ]
+[e :U 133 ]
+{
+[; ;main.c: 41: PORTBbits.RB6 = 0;
+"41
+[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 42: for(int j = 0; j < 16; j++){
+"42
+{
+[v _j `i ~T0 @X0 1 a ]
+[e = _j -> 0 `i ]
+[e $ < _j -> 16 `i 136  ]
+[e $U 137  ]
+[e :U 136 ]
+{
+[; ;main.c: 43: PORTCbits.RC5 = 0;
+"43
+[e = . . _PORTCbits 0 5 -> -> 0 `i `uc ]
+[; ;main.c: 44: PORTCbits.RC7 = lights[i][j];
+"44
+[e = . . _PORTCbits 0 7 -> *U + &U *U + _lights * -> _i `x -> * -> # *U &U *U _lights `ui -> -> 16 `i `ui `x * -> -> _j `ui `ux -> -> # *U &U *U + _lights * -> _i `x -> * -> # *U &U *U _lights `ui -> -> 16 `i `ui `x `ui `ux `uc ]
+[; ;main.c: 45: PORTCbits.RC5 = 1;
+"45
+[e = . . _PORTCbits 0 5 -> -> 1 `i `uc ]
+"46
+}
+"42
+[e ++ _j -> 1 `i ]
+[e $ < _j -> 16 `i 136  ]
+[e :U 137 ]
+"46
+}
+[; ;main.c: 46: }
+[; ;main.c: 47: PORTBbits.RB6 = 1;
+"47
+[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
+"48
+}
+"39
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 4 `i 133  ]
+[e :U 134 ]
+"48
+}
+[; ;main.c: 48: }
+[; ;main.c: 49: }
+"49
+[e :UE 132 ]
 }

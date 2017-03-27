@@ -1385,7 +1385,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
-[; ;gpio.h: 33: void gpio_init(void);
+[; ;gpio.h: 42: void gpio_init(void);
 "30 gpio.c
 [v _gpio_init `(v ~T0 @X0 1 ef ]
 {
@@ -1416,7 +1416,31 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;gpio.c: 40: PORTBbits.RB6 = 0;
 "40
 [e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 41: }
-"41
+[; ;gpio.c: 42: TRISCbits.TRISC0 = 0;
+"42
+[e = . . _TRISCbits 0 0 -> -> 0 `i `uc ]
+[; ;gpio.c: 43: TRISCbits.TRISC1 = 0;
+"43
+[e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
+[; ;gpio.c: 44: TRISCbits.TRISC2 = 0;
+"44
+[e = . . _TRISCbits 0 2 -> -> 0 `i `uc ]
+[; ;gpio.c: 45: TRISBbits.TRISB4 = 0;
+"45
+[e = . . _TRISBbits 0 1 -> -> 0 `i `uc ]
+[; ;gpio.c: 47: PORTCbits.RC0 = 0;
+"47
+[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
+[; ;gpio.c: 48: PORTCbits.RC1 = 0;
+"48
+[e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
+[; ;gpio.c: 49: PORTCbits.RC2 = 0;
+"49
+[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
+[; ;gpio.c: 50: PORTBbits.RB4 = 0;
+"50
+[e = . . _PORTBbits 0 1 -> -> 0 `i `uc ]
+[; ;gpio.c: 51: }
+"51
 [e :UE 131 ]
 }

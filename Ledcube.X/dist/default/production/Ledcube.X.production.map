@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.41\dat\en_msgs.txt -cs \
   -h+dist/default/production\Ledcube.X.production.sym \
   --cmf=dist/default/production\Ledcube.X.production.cmf -z -Q16F690 \
-  -oC:\Users\ITSERV~1\AppData\Local\Temp\s124.2 \
+  -oC:\Users\ITSERV~1\AppData\Local\Temp\scc.2 \
   -Mdist/default/production/Ledcube.X.production.map -E1 -ver=XC8 \
   -ASTACK=020h-06fh -pstack=STACK -ACODE=00h-07FFhx2 -ASTRCODE=00h-0FFFh \
   -ASTRING=00h-0FFhx16 -ACONST=00h-0FFhx16 -AENTRY=00h-0FFhx16 \
@@ -17,7 +17,7 @@ Linker command line:
   -pfunctab=CODE -ACONFIG=02007h-02007h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=02000h-02003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/02100h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
-  -DENTRY=2 -k C:\Users\ITSERV~1\AppData\Local\Temp\s124.obj \
+  -DENTRY=2 -k C:\Users\ITSERV~1\AppData\Local\Temp\scc.obj \
   dist/default/production\Ledcube.X.production.obj 
 
 Object code version is 3.11
@@ -27,12 +27,12 @@ Machine type is 16F690
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\ITSERV~1\AppData\Local\Temp\s124.obj
+C:\Users\ITSERV~1\AppData\Local\Temp\scc.obj
                 end_init                              0        0        2        0       0
 dist/default/production\Ledcube.X.production.obj
                 cinit                               7FD      7FD        3      FFA       0
-                text1                               7EE      7EE        F      FDC       0
-                maintext                            7EA      7EA        4      FD4       0
+                text1                               7E2      7E2       1B      FC4       0
+                maintext                            7DE      7DE        4      FBC       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -40,8 +40,8 @@ TOTAL           Name                               Link     Load   Length     Sp
         CLASS   CODE           
                 end_init                              0        0        2         0
                 cinit                               7FD      7FD        3         0
-                text1                               7EE      7EE        F         0
-                maintext                            7EA      7EA        4         0
+                text1                               7E2      7E2       1B         0
+                maintext                            7DE      7DE        4         0
 
         CLASS   STRCODE        
 
@@ -85,8 +85,8 @@ TOTAL           Name                               Link     Load   Length     Sp
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
                 reset_vec                      000000  000002  000002         0       0  CODE        2
-                maintext                       0007EA  000004  0007EE       FD4       0  CODE        2
-                text1                          0007EE  00000F  0007FD       FDC       0  CODE        2
+                maintext                       0007DE  000004  0007E2       FBC       0  CODE        2
+                text1                          0007E2  00001B  0007FD       FC4       0  CODE        2
                 cinit                          0007FD  000003  000800       FFA       0  CODE        2
 
 
@@ -96,14 +96,14 @@ UNUSED ADDRESS RANGES
         BANK0            0020-006F             50           1
         BANK1            00A0-00EF             50           1
         BANK2            0120-016F             50           1
-        CODE             0002-07E9            7E8           2
+        CODE             0002-07DD            7DC           2
                          0800-0FFF            800
         COMMON           0070-007D              E           1
         CONFIG           2007-2007              1           2
-        CONST            0002-07E9            100           2
+        CONST            0002-07DD            100           2
                          0800-0FFF            100
         EEDATA           2100-21FF            100           2
-        ENTRY            0002-07E9            100           2
+        ENTRY            0002-07DD            100           2
                          0800-0FFF            100
         IDLOC            2000-2003              4           2
         RAM              0020-006F             50           1
@@ -114,9 +114,9 @@ UNUSED ADDRESS RANGES
         SFR2             0100-011F             20           1
         SFR3             0180-01EF             70           1
         STACK            0020-006F             50           1
-        STRCODE          0002-07E9            7E8           2
+        STRCODE          0002-07DD            7DC           2
                          0800-0FFF            800
-        STRING           0002-07E9            100           2
+        STRING           0002-07DD            100           2
                          0800-0FFF            100
 
                                   Symbol Table
@@ -200,15 +200,15 @@ ___latbits               (abs)        0001
 ___sp                    stack        0000
 __end_of__initialization cinit        07FD
 __end_of_gpio_init       text1        07FD
-__end_of_main            maintext     07EE
+__end_of_main            maintext     07E2
 __initialization         cinit        07FD
 __pcstackCOMMON          cstackCOMMON 0000
-__pmaintext              maintext     07EA
-__ptext1                 text1        07EE
+__pmaintext              maintext     07DE
+__ptext1                 text1        07E2
 __size_of_gpio_init      (abs)        0000
 __size_of_main           (abs)        0000
-_gpio_init               text1        07EE
-_main                    maintext     07EA
+_gpio_init               text1        07E2
+_main                    maintext     07DE
 btemp                    (abs)        007E
 end_of_initialization    cinit        07FD
 intlevel0                functab      0000
@@ -235,7 +235,7 @@ FUNCTION INFORMATION:
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-                  2    4[None  ] int 
+                  2    8[None  ] int 
  Registers used:
 		status,2, status,0, pclath, cstack
  Tracked objects:
@@ -295,12 +295,12 @@ shared
 shared estimated size: 1
 
 gpio.c
-		_gpio_init     		CODE           	07EE	0000	16
+		_gpio_init     		CODE           	07E2	0000	28
 
-gpio.c estimated size: 16
+gpio.c estimated size: 28
 
 main.c
-		_main          		CODE           	07EA	0000	5
+		_main          		CODE           	07DE	0000	5
 
 main.c estimated size: 5
 

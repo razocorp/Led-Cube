@@ -25,6 +25,15 @@
 #define SHIFT_REG_DATA                  PORTCbits.RC7
 #define SHIFT_REG_CLK                   PORTBbits.RB6 
 
+#define TRANS_GATE_1_DIR                TRISCbits.TRISC0
+#define TRANS_GATE_2_DIR                TRISCbits.TRISC1
+#define TRANS_GATE_3_DIR                TRISCbits.TRISC2
+#define TRANS_GATE_4_DIR                TRISBbits.TRISB4
+
+#define TRANS_GATE_1                    PORTCbits.RC0
+#define TRANS_GATE_2                    PORTCbits.RC1
+#define TRANS_GATE_3                    PORTCbits.RC2
+#define TRANS_GATE_4                    PORTBbits.RB4
     
 // =============================================================================
 // Public function declarations

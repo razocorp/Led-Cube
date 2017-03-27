@@ -38,6 +38,16 @@ void gpio_init(void){
     SHIFT_REG_LATCH = 0;
     SHIFT_REG_DATA = 0;
     SHIFT_REG_CLK = 0;
+    
+    TRANS_GATE_1_DIR = 0;
+    TRANS_GATE_2_DIR = 0;
+    TRANS_GATE_3_DIR = 0;
+    TRANS_GATE_4_DIR = 0;      
+
+    TRANS_GATE_1 = 0;           
+    TRANS_GATE_2 = 0;                   
+    TRANS_GATE_3 = 0;
+    TRANS_GATE_4 = 0;
 }
 
 // =============================================================================

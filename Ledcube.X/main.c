@@ -28,8 +28,22 @@
 
 int main(void){
     gpio_init();
+    
 }
 
 // =============================================================================
 // Private function definitions
 // =============================================================================
+
+void setLights(int lights[4][16]){
+    for(int i = 0; i < 4; i++){
+        
+        SHIFT_REG_CLK = 0;
+        for(int j = 0; j < 16; j++){
+            SHIFT_REG_LATCH = 0;
+            SHIFT_REG_DATA = lights[i][j];
+            SHIFT_REG_LATCH = 1;
+        }
+        SHIFT_REG_CLK = 1;
+    }
+}
