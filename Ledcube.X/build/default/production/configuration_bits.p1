@@ -1,40 +1,22 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"2936 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic16f690.h
-[v _ANSEL `Vuc ~T0 @X0 0 e@286 ]
-"2997
-[v _ANSELH `Vuc ~T0 @X0 0 e@287 ]
-"1303
-[s S51 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S51 . TRISC0 TRISC1 TRISC2 TRISC3 TRISC4 TRISC5 TRISC6 TRISC7 ]
-"1302
-[u S50 `S51 1 ]
-[n S50 . . ]
-"1314
-[v _TRISCbits `VS50 ~T0 @X0 0 e@135 ]
-"1265
-[s S49 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S49 . . TRISB4 TRISB5 TRISB6 TRISB7 ]
-"1264
-[u S48 `S49 1 ]
-[n S48 . . ]
-"1273
-[v _TRISBbits `VS48 ~T0 @X0 0 e@134 ]
-"251
-[s S10 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S10 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
-"250
-[u S9 `S10 1 ]
-[n S9 . . ]
-"262
-[v _PORTCbits `VS9 ~T0 @X0 0 e@7 ]
-"213
-[s S8 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S8 . . RB4 RB5 RB6 RB7 ]
-"212
-[u S7 `S8 1 ]
-[n S7 . . ]
-"221
-[v _PORTBbits `VS7 ~T0 @X0 0 e@6 ]
+"2 configuration_bits.c
+[p x FOSC=INTRCIO ]
+"3
+[p x WDTE=OFF ]
+"4
+[p x PWRTE=OFF ]
+"5
+[p x MCLRE=OFF ]
+"6
+[p x CP=OFF ]
+"7
+[p x CPD=OFF ]
+"8
+[p x BOREN=ON ]
+"9
+[p x IESO=ON ]
+"10
+[p x FCMEN=ON ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1385,62 +1367,3 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
-[; ;gpio.h: 42: void gpio_init(void);
-"30 gpio.c
-[v _gpio_init `(v ~T0 @X0 1 ef ]
-{
-[; ;gpio.c: 30: void gpio_init(void){
-[e :U _gpio_init ]
-[f ]
-[; ;gpio.c: 31: ANSEL = 0;
-"31
-[e = _ANSEL -> -> 0 `i `uc ]
-[; ;gpio.c: 32: ANSELH = 0;
-"32
-[e = _ANSELH -> -> 0 `i `uc ]
-[; ;gpio.c: 34: TRISCbits.TRISC5 = 0;
-"34
-[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;gpio.c: 35: TRISCbits.TRISC7 = 0;
-"35
-[e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
-[; ;gpio.c: 36: TRISBbits.TRISB6 = 0;
-"36
-[e = . . _TRISBbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 38: PORTCbits.RC5 = 0;
-"38
-[e = . . _PORTCbits 0 5 -> -> 0 `i `uc ]
-[; ;gpio.c: 39: PORTCbits.RC7 = 0;
-"39
-[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
-[; ;gpio.c: 40: PORTBbits.RB6 = 0;
-"40
-[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 42: TRISCbits.TRISC0 = 0;
-"42
-[e = . . _TRISCbits 0 0 -> -> 0 `i `uc ]
-[; ;gpio.c: 43: TRISCbits.TRISC1 = 0;
-"43
-[e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
-[; ;gpio.c: 44: TRISCbits.TRISC2 = 0;
-"44
-[e = . . _TRISCbits 0 2 -> -> 0 `i `uc ]
-[; ;gpio.c: 45: TRISCbits.TRISC3 = 0;
-"45
-[e = . . _TRISCbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 47: PORTCbits.RC0 = 0;
-"47
-[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
-[; ;gpio.c: 48: PORTCbits.RC1 = 0;
-"48
-[e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-[; ;gpio.c: 49: PORTCbits.RC2 = 0;
-"49
-[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
-[; ;gpio.c: 50: PORTCbits.RC3 = 0;
-"50
-[e = . . _PORTCbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 51: }
-"51
-[e :UE 131 ]
-}

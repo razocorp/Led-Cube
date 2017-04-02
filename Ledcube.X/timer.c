@@ -1,11 +1,9 @@
 // =============================================================================
 // Include statements
 // =============================================================================
-#include "gpio.h"
 #include "timer.h"
 #include "leds.h"
-#include <stdint.h>
-#include <stdbool.h>
+#include <xc.h>
 // =============================================================================
 // Private type definitions
 // =============================================================================
@@ -21,51 +19,46 @@
 // =============================================================================
 // Private variables
 // =============================================================================
-
+static uint8_t layer = 0;
 // =============================================================================
 // Private function declarations
 // =============================================================================
-static void setLights(uint8_t gate, uint16_t lights);
-static void moveSnake(int dir);
+
 // =============================================================================
 // Public function definitions
 // =============================================================================
 
-int main(void){
-    gpio_init();
-    timer_init();
-    leds_init();
-    while(1){
-        if(animation_flag){
-            animation_flag = 0;
-            update_animation();
-        }
+void timer_init(void){
+    T1CON = 0;
+    INTCONbits.GIE = 1;
+    INTCONbits.PEIE = 1;
+    PIE1bits.TMR1IE = 1;
+    TMR1H = 0xF6;
+    TMR1L = 0x3B;
+    T1CONbits.TMR1ON = 1;
+}
 
-    };
+void interrupt isr(){
+    static uint8_t prescaler = 0;
+    if(PIR1bits.TMR1IF){
+        PIR1bits.TMR1IF = 0;
+        T1CONbits.TMR1ON = 0;
+        TMR1H = 0xF6;
+        TMR1L = 0x3B;
+        T1CONbits.TMR1ON = 1;
+   
+        set_lights(layer);
+        if(++layer == NBR_OF_LAYERS)
+            layer = 0;
+        
+        if(++prescaler == 100){
+            prescaler = 0;
+            animation_flag = true;
+        }
+        
+    }
 }
 
 // =============================================================================
 // Private function definitions
 // =============================================================================
-
-/*static void moveSnake(int dir){
-    
-}
-
-static void setLights(uint8_t gate, uint16_t lights){
-    TRANS_GATE_1 = (0 == gate);
-    TRANS_GATE_2 = (1 == gate);
-    TRANS_GATE_3 = (2 == gate);
-    TRANS_GATE_4 = (3 == gate);
-    uint16_t a = 1;
-    for(uint8_t j = 0; j != 16; ++j){
-        SHIFT_REG_CLK = 0;
-        SHIFT_REG_DATA = (0u != (lights & (1u << j)));
-        //SHIFT_REG_DATA = ((uint16_t)0 != (uint16_t)0xffff & (uint16_t)0x0001);
-        //SHIFT_REG_DATA = 1;
-        SHIFT_REG_CLK = 1;
-    }
-    SHIFT_REG_LATCH = 1;
-    SHIFT_REG_CLK = 0;
-    SHIFT_REG_LATCH = 0;
-}*/

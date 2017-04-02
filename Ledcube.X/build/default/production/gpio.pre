@@ -1903,11 +1903,11 @@ PORTBbits.RB6 = 0;
 TRISCbits.TRISC0 = 0;
 TRISCbits.TRISC1 = 0;
 TRISCbits.TRISC2 = 0;
-TRISBbits.TRISB4 = 0;
+TRISCbits.TRISC3 = 0;
 
 PORTCbits.RC0 = 0;
 PORTCbits.RC1 = 0;
 PORTCbits.RC2 = 0;
-PORTBbits.RB4 = 0;
+PORTCbits.RC3 = 0;
 }
 

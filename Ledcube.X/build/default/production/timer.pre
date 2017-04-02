@@ -1,5 +1,5 @@
 
-# 1 "main.c"
+# 1 "timer.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1884,9 +1884,6 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 42 "gpio.h"
-void gpio_init(void);
-
 # 26 "timer.h"
 void timer_init(void);
 
@@ -1991,23 +1988,38 @@ void update_animation();
 void set_lights(uint8_t gate);
 void leds_init(void);
 
-# 28 "main.c"
-static void setLights(uint8_t gate, uint16_t lights);
-static void moveSnake(int dir);
+# 22 "timer.c"
+static uint8_t layer = 0;
 
-
-
-
-int main(void){
-gpio_init();
-timer_init();
-leds_init();
-while(1){
-if(animation_flag){
-animation_flag = 0;
-update_animation();
+# 31
+void timer_init(void){
+T1CON = 0;
+INTCONbits.GIE = 1;
+INTCONbits.PEIE = 1;
+PIE1bits.TMR1IE = 1;
+TMR1H = 0xF6;
+TMR1L = 0x3B;
+T1CONbits.TMR1ON = 1;
 }
 
-};
+void interrupt isr(){
+static uint8_t prescaler = 0;
+if(PIR1bits.TMR1IF){
+PIR1bits.TMR1IF = 0;
+T1CONbits.TMR1ON = 0;
+TMR1H = 0xF6;
+TMR1L = 0x3B;
+T1CONbits.TMR1ON = 1;
+
+set_lights(layer);
+if(++layer == 4)
+layer = 0;
+
+if(++prescaler == 100){
+prescaler = 0;
+animation_flag = 1;
+}
+
+}
 }
 

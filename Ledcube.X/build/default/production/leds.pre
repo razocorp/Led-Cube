@@ -1,5 +1,5 @@
 
-# 1 "main.c"
+# 1 "leds.c"
 
 # 26 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\htc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -1884,12 +1884,6 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 42 "gpio.h"
-void gpio_init(void);
-
-# 26 "timer.h"
-void timer_init(void);
-
 # 13 "C:\Program Files (x86)\Microchip\xc8\v1.41\include\stdint.h"
 typedef signed char int8_t;
 
@@ -1991,23 +1985,86 @@ void update_animation();
 void set_lights(uint8_t gate);
 void leds_init(void);
 
-# 28 "main.c"
-static void setLights(uint8_t gate, uint16_t lights);
-static void moveSnake(int dir);
+# 42 "gpio.h"
+void gpio_init(void);
+
+# 15 "leds.c"
+bool volatile animation_flag = 0;
+
+
+
+typedef enum
+{
+UPDOWN = 0
+} animation_state_t;
+
+
+
+static uint16_t leds[4];
+static animation_state_t animation_state;
+
+
+
+static uint16_t leds_get_layer(uint8_t layer_nbr);
+static void animation_updown();
 
 
 
 
-int main(void){
-gpio_init();
-timer_init();
-leds_init();
-while(1){
-if(animation_flag){
-animation_flag = 0;
-update_animation();
+void leds_init(void) {
+leds[0] = 0x5a5a;
+leds[1] = 0xa5a5;
+leds[2] = 0x5a5a;
+leds[3] = 0xa5a5;
 }
 
-};
+
+void set_lights(uint8_t gate) {
+uint16_t lights = leds_get_layer(gate);
+PORTCbits.RC0 = 0;
+PORTCbits.RC1 = 0;
+PORTCbits.RC2 = 0;
+PORTCbits.RC3 = 0;
+uint16_t a = 1;
+for(uint8_t j = 0; j != 16; ++j){
+PORTBbits.RB6 = 0;
+PORTCbits.RC7 = (0u != (lights & (1u << j)));
+PORTBbits.RB6 = 1;
+}
+PORTCbits.RC5 = 1;
+PORTBbits.RB6 = 0;
+PORTCbits.RC5 = 0;
+
+PORTCbits.RC0 = (0 == gate);
+PORTCbits.RC1 = (1 == gate);
+PORTCbits.RC2 = (2 == gate);
+PORTCbits.RC3 = (3 == gate);
 }
 
+void update_animation(){
+switch (animation_state){
+case UPDOWN:
+animation_updown();
+break;
+}
+}
+
+
+
+
+static uint16_t leds_get_layer(uint8_t layer_nbr) {
+return leds[layer_nbr];
+}
+
+static void animation_updown(){
+static uint8_t l = 0;
+for(uint8_t i = 0; i != 4; ++i){
+if(i == l){
+leds[i] = 0xffff;
+} else {
+leds[i] = 0x0000;
+}
+}
+if(++l == 4)
+l = 0;
+}

@@ -1,25 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"2936 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic16f690.h
-[v _ANSEL `Vuc ~T0 @X0 0 e@286 ]
-"2997
-[v _ANSELH `Vuc ~T0 @X0 0 e@287 ]
-"1303
-[s S51 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S51 . TRISC0 TRISC1 TRISC2 TRISC3 TRISC4 TRISC5 TRISC6 TRISC7 ]
-"1302
-[u S50 `S51 1 ]
-[n S50 . . ]
-"1314
-[v _TRISCbits `VS50 ~T0 @X0 0 e@135 ]
-"1265
-[s S49 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S49 . . TRISB4 TRISB5 TRISB6 TRISB7 ]
-"1264
-[u S48 `S49 1 ]
-[n S48 . . ]
-"1273
-[v _TRISBbits `VS48 ~T0 @X0 0 e@134 ]
-"251
+"27 leds.c
+[c E1503 0 .. ]
+[n E1503 . UPDOWN  ]
+"31
+[v _leds_get_layer `(ui ~T0 @X0 0 sf1`uc ]
+"251 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic16f690.h
 [s S10 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S10 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
 "250
@@ -35,6 +20,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S7 . . ]
 "221
 [v _PORTBbits `VS7 ~T0 @X0 0 e@6 ]
+"32 leds.c
+[v _animation_updown `(v ~T0 @X0 0 sf ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -1385,62 +1372,265 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 192: extern unsigned char __resetbits;
 [; ;pic.h: 193: extern __bit __powerdown;
 [; ;pic.h: 194: extern __bit __timeout;
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;leds.h: 18: extern volatile bool animation_flag;
+[; ;leds.h: 28: void update_animation();
+[; ;leds.h: 29: void set_lights(uint8_t gate);
+[; ;leds.h: 30: void leds_init(void);
 [; ;gpio.h: 42: void gpio_init(void);
-"30 gpio.c
-[v _gpio_init `(v ~T0 @X0 1 ef ]
+"15 leds.c
+[v _animation_flag `Vuc ~T0 @X0 1 e ]
+[i _animation_flag
+-> -> 0 `i `uc
+]
+[; ;leds.c: 15: bool volatile animation_flag = 0;
+[; ;leds.c: 19: typedef enum
+[; ;leds.c: 20: {
+[; ;leds.c: 21: UPDOWN = 0
+[; ;leds.c: 22: } animation_state_t;
+"26
+[v _leds `ui ~T0 @X0 -> 4 `i s ]
+[; ;leds.c: 26: static uint16_t leds[4];
+"27
+[v _animation_state `E1503 ~T0 @X0 1 s ]
+[; ;leds.c: 27: static animation_state_t animation_state;
+[; ;leds.c: 31: static uint16_t leds_get_layer(uint8_t layer_nbr);
+[; ;leds.c: 32: static void animation_updown();
+"37
+[v _leds_init `(v ~T0 @X0 1 ef ]
 {
-[; ;gpio.c: 30: void gpio_init(void){
-[e :U _gpio_init ]
+[; ;leds.c: 37: void leds_init(void) {
+[e :U _leds_init ]
 [f ]
-[; ;gpio.c: 31: ANSEL = 0;
-"31
-[e = _ANSEL -> -> 0 `i `uc ]
-[; ;gpio.c: 32: ANSELH = 0;
-"32
-[e = _ANSELH -> -> 0 `i `uc ]
-[; ;gpio.c: 34: TRISCbits.TRISC5 = 0;
-"34
-[e = . . _TRISCbits 0 5 -> -> 0 `i `uc ]
-[; ;gpio.c: 35: TRISCbits.TRISC7 = 0;
-"35
-[e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
-[; ;gpio.c: 36: TRISBbits.TRISB6 = 0;
-"36
-[e = . . _TRISBbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 38: PORTCbits.RC5 = 0;
+[; ;leds.c: 38: leds[0] = 0x5a5a;
 "38
-[e = . . _PORTCbits 0 5 -> -> 0 `i `uc ]
-[; ;gpio.c: 39: PORTCbits.RC7 = 0;
+[e = *U + &U _leds * -> -> -> 0 `i `ui `ux -> -> # *U &U _leds `ui `ux -> -> 23130 `i `ui ]
+[; ;leds.c: 39: leds[1] = 0xa5a5;
 "39
-[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
-[; ;gpio.c: 40: PORTBbits.RB6 = 0;
+[e = *U + &U _leds * -> -> -> 1 `i `ui `ux -> -> # *U &U _leds `ui `ux -> 42405 `ui ]
+[; ;leds.c: 40: leds[2] = 0x5a5a;
 "40
-[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 42: TRISCbits.TRISC0 = 0;
+[e = *U + &U _leds * -> -> -> 2 `i `ui `ux -> -> # *U &U _leds `ui `ux -> -> 23130 `i `ui ]
+[; ;leds.c: 41: leds[3] = 0xa5a5;
+"41
+[e = *U + &U _leds * -> -> -> 3 `i `ui `ux -> -> # *U &U _leds `ui `ux -> 42405 `ui ]
+[; ;leds.c: 42: }
 "42
-[e = . . _TRISCbits 0 0 -> -> 0 `i `uc ]
-[; ;gpio.c: 43: TRISCbits.TRISC1 = 0;
-"43
-[e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
-[; ;gpio.c: 44: TRISCbits.TRISC2 = 0;
-"44
-[e = . . _TRISCbits 0 2 -> -> 0 `i `uc ]
-[; ;gpio.c: 45: TRISCbits.TRISC3 = 0;
+[e :UE 131 ]
+}
 "45
-[e = . . _TRISCbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 47: PORTCbits.RC0 = 0;
+[v _set_lights `(v ~T0 @X0 1 ef1`uc ]
+{
+[; ;leds.c: 45: void set_lights(uint8_t gate) {
+[e :U _set_lights ]
+[v _gate `uc ~T0 @X0 1 r1 ]
+[f ]
+"46
+[v _lights `ui ~T0 @X0 1 a ]
+[; ;leds.c: 46: uint16_t lights = leds_get_layer(gate);
+[e = _lights ( _leds_get_layer (1 _gate ]
+[; ;leds.c: 47: PORTCbits.RC0 = 0;
 "47
 [e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
-[; ;gpio.c: 48: PORTCbits.RC1 = 0;
+[; ;leds.c: 48: PORTCbits.RC1 = 0;
 "48
 [e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-[; ;gpio.c: 49: PORTCbits.RC2 = 0;
+[; ;leds.c: 49: PORTCbits.RC2 = 0;
 "49
 [e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
-[; ;gpio.c: 50: PORTCbits.RC3 = 0;
+[; ;leds.c: 50: PORTCbits.RC3 = 0;
 "50
 [e = . . _PORTCbits 0 3 -> -> 0 `i `uc ]
-[; ;gpio.c: 51: }
 "51
-[e :UE 131 ]
+[v _a `ui ~T0 @X0 1 a ]
+[; ;leds.c: 51: uint16_t a = 1;
+[e = _a -> -> 1 `i `ui ]
+[; ;leds.c: 52: for(uint8_t j = 0; j != 16; ++j){
+"52
+{
+[v _j `uc ~T0 @X0 1 a ]
+[e = _j -> -> 0 `i `uc ]
+[e $ != -> _j `i -> 16 `i 133  ]
+[e $U 134  ]
+[e :U 133 ]
+{
+[; ;leds.c: 53: PORTBbits.RB6 = 0;
+"53
+[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
+[; ;leds.c: 54: PORTCbits.RC7 = (0u != (lights & (1u << j)));
+"54
+[e = . . _PORTCbits 0 7 -> -> != -> 0 `ui & _lights << -> 1 `ui _j `i `uc ]
+[; ;leds.c: 55: PORTBbits.RB6 = 1;
+"55
+[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
+"56
+}
+"52
+[e =+ _j -> -> 1 `i `uc ]
+[e $ != -> _j `i -> 16 `i 133  ]
+[e :U 134 ]
+"56
+}
+[; ;leds.c: 56: }
+[; ;leds.c: 57: PORTCbits.RC5 = 1;
+"57
+[e = . . _PORTCbits 0 5 -> -> 1 `i `uc ]
+[; ;leds.c: 58: PORTBbits.RB6 = 0;
+"58
+[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
+[; ;leds.c: 59: PORTCbits.RC5 = 0;
+"59
+[e = . . _PORTCbits 0 5 -> -> 0 `i `uc ]
+[; ;leds.c: 61: PORTCbits.RC0 = (0 == gate);
+"61
+[e = . . _PORTCbits 0 0 -> -> == -> 0 `i -> _gate `i `i `uc ]
+[; ;leds.c: 62: PORTCbits.RC1 = (1 == gate);
+"62
+[e = . . _PORTCbits 0 1 -> -> == -> 1 `i -> _gate `i `i `uc ]
+[; ;leds.c: 63: PORTCbits.RC2 = (2 == gate);
+"63
+[e = . . _PORTCbits 0 2 -> -> == -> 2 `i -> _gate `i `i `uc ]
+[; ;leds.c: 64: PORTCbits.RC3 = (3 == gate);
+"64
+[e = . . _PORTCbits 0 3 -> -> == -> 3 `i -> _gate `i `i `uc ]
+[; ;leds.c: 65: }
+"65
+[e :UE 132 ]
+}
+"67
+[v _update_animation `(v ~T0 @X0 1 ef ]
+{
+[; ;leds.c: 67: void update_animation(){
+[e :U _update_animation ]
+[f ]
+[; ;leds.c: 68: switch (animation_state){
+"68
+[e $U 138  ]
+{
+[; ;leds.c: 69: case UPDOWN:
+"69
+[e :U 139 ]
+[; ;leds.c: 70: animation_updown();
+"70
+[e ( _animation_updown ..  ]
+[; ;leds.c: 71: break;
+"71
+[e $U 137  ]
+"72
+}
+[; ;leds.c: 72: }
+[e $U 137  ]
+"68
+[e :U 138 ]
+[e [\ _animation_state , $ . `E1503 0 139
+ 137 ]
+"72
+[e :U 137 ]
+[; ;leds.c: 73: }
+"73
+[e :UE 136 ]
+}
+"78
+[v _leds_get_layer `(ui ~T0 @X0 1 sf1`uc ]
+{
+[; ;leds.c: 78: static uint16_t leds_get_layer(uint8_t layer_nbr) {
+[e :U _leds_get_layer ]
+[v _layer_nbr `uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;leds.c: 79: return leds[layer_nbr];
+"79
+[e ) *U + &U _leds * -> _layer_nbr `ux -> -> # *U &U _leds `ui `ux ]
+[e $UE 140  ]
+[; ;leds.c: 80: }
+"80
+[e :UE 140 ]
+}
+"82
+[v _animation_updown `(v ~T0 @X0 1 sf ]
+{
+[; ;leds.c: 82: static void animation_updown(){
+[e :U _animation_updown ]
+[f ]
+"83
+[v F1517 `uc ~T0 @X0 1 s l ]
+[i F1517
+-> -> 0 `i `uc
+]
+[; ;leds.c: 83: static uint8_t l = 0;
+[; ;leds.c: 84: for(uint8_t i = 0; i != 4; ++i){
+"84
+{
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `uc ]
+[e $ != -> _i `i -> 4 `i 142  ]
+[e $U 143  ]
+[e :U 142 ]
+{
+[; ;leds.c: 85: if(i == l){
+"85
+[e $ ! == -> _i `i -> F1517 `i 145  ]
+{
+[; ;leds.c: 86: leds[i] = 0xffff;
+"86
+[e = *U + &U _leds * -> _i `ux -> -> # *U &U _leds `ui `ux -> 65535 `ui ]
+"87
+}
+[; ;leds.c: 87: } else {
+[e $U 146  ]
+[e :U 145 ]
+{
+[; ;leds.c: 88: leds[i] = 0x0000;
+"88
+[e = *U + &U _leds * -> _i `ux -> -> # *U &U _leds `ui `ux -> -> 0 `i `ui ]
+"89
+}
+[e :U 146 ]
+"90
+}
+"84
+[e =+ _i -> -> 1 `i `uc ]
+[e $ != -> _i `i -> 4 `i 142  ]
+[e :U 143 ]
+"90
+}
+[; ;leds.c: 89: }
+[; ;leds.c: 90: }
+[; ;leds.c: 91: if(++l == 4)
+"91
+[e $ ! == -> =+ F1517 -> -> 1 `i `uc `i -> 4 `i 147  ]
+[; ;leds.c: 92: l = 0;
+"92
+[e = F1517 -> -> 0 `i `uc ]
+[e :U 147 ]
+[; ;leds.c: 93: }
+"93
+[e :UE 141 ]
 }
